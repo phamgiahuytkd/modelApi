@@ -1,4 +1,4 @@
-FROM python:3.11-slim
+FROM python:3.12.3
 
 # Cài các gói cần thiết
 RUN apt-get update && apt-get install -y build-essential libffi-dev python3-dev git && rm -rf /var/lib/apt/lists/*
