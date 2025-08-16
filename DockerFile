@@ -1,0 +1,17 @@
+# Dùng image Python nhẹ
+FROM python:3.11-slim
+
+# Thiết lập thư mục làm việc
+WORKDIR /app
+
+# Copy toàn bộ project vào container
+COPY . /app
+
+# Cài đặt các package
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Mở port
+EXPOSE 5000
+
+# Chạy Flask app
+CMD ["python", "main.py"]
