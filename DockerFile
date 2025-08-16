@@ -1,17 +1,18 @@
-# Dùng image Python nhẹ
 FROM python:3.11-slim
 
-# Thiết lập thư mục làm việc
-WORKDIR /app
+# Cài các gói cần thiết để tạo venv
+RUN apt-get update && apt-get install -y python3-venv build-essential && rm -rf /var/lib/apt/lists/*
 
-# Copy toàn bộ project vào container
+# Tạo venv
+RUN python -m venv /opt/venv
+# Copy requirements và cài
+COPY requirements.txt .
+RUN /opt/venv/bin/pip install --upgrade pip
+RUN /opt/venv/bin/pip install -r requirements.txt
+
+# Thêm thư mục app
+WORKDIR /app
 COPY . /app
 
-# Cài đặt các package
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Mở port
-EXPOSE 5000
-
-# Chạy Flask app
-CMD ["python", "main.py"]
+# Chạy app
+CMD ["/opt/venv/bin/python", "main.py"]
